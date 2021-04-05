@@ -15,7 +15,7 @@ protected section.
 
   PRIVATE SECTION.
 
-    CONSTANTS c_faker_name TYPE zif_util_faker=>ty_faker_name VALUE 'EMAIL' ##NO_TEXT.
+    CONSTANTS c_faker_name TYPE zcl_util_faker_abs=>ty_faker_name VALUE 'EMAIL' ##NO_TEXT.
 ENDCLASS.
 
 

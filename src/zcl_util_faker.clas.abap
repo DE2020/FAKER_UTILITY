@@ -1,40 +1,40 @@
-class ZCL_UTIL_FAKER definition
-  public
-  create public .
+CLASS zcl_util_faker DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  types:
-    BEGIN OF ty_clsif,
-        faker_name TYPE zif_util_faker=>ty_faker_name,
+    TYPES:
+      BEGIN OF ty_clsif,
+        faker_name TYPE zcl_util_faker_abs=>ty_faker_name,
         clsname    TYPE vseoifimpl-clsname,
         inst       TYPE REF TO zcl_util_faker_abs,
       END OF ty_clsif .
-  types:
-    tt_clsif TYPE HASHED TABLE OF ty_clsif WITH UNIQUE KEY faker_name .
+    TYPES:
+      tt_clsif TYPE HASHED TABLE OF ty_clsif WITH UNIQUE KEY faker_name .
 
-  data TCLSNAME type TT_CLSIF .
+    DATA tclsname TYPE tt_clsif .
 
-  methods CONSTRUCTOR .
-  class-methods RANDOM_INT
-    importing
-      !MIN type I default 1
-      !MAX type I default 100
-    returning
-      value(R) type I .
-  class-methods FACTORY
-    exporting
-      value(OFAKER) type ref to ZCL_UTIL_FAKER .
-  methods FAKER
-    importing
-      !FAKER_NAME type STRING
-    returning
-      value(R) type ref to ZCL_UTIL_FAKER_ABS .
-  class-methods LIST_DOMVALUE
-    importing
-      !DOMNAME type DD07L-DOMNAME
-    returning
-      value(R) type SRT_STRINGS .
+    METHODS constructor .
+    CLASS-METHODS random_int
+      IMPORTING
+        !min     TYPE i DEFAULT 1
+        !max     TYPE i DEFAULT 100
+      RETURNING
+        VALUE(r) TYPE i .
+    CLASS-METHODS factory
+      EXPORTING
+        VALUE(ofaker) TYPE REF TO zcl_util_faker .
+    METHODS faker
+      IMPORTING
+        !faker_name TYPE string
+      RETURNING
+        VALUE(r)    TYPE REF TO zcl_util_faker_abs .
+    CLASS-METHODS list_domvalue
+      IMPORTING
+        !domname TYPE dd07l-domname
+      RETURNING
+        VALUE(r) TYPE srt_strings .
   PROTECTED SECTION.
 
     DATA munique TYPE abap_bool .

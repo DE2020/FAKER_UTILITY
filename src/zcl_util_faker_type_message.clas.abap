@@ -12,9 +12,9 @@ protected section.
 
   methods FIND_DATA
     redefinition .
-private section.
+PRIVATE SECTION.
 
-  constants C_FAKER_NAME type ZIF_UTIL_FAKER=>TY_FAKER_NAME value 'TYPE_MESSAGE' ##NO_TEXT.
+  CONSTANTS c_faker_name TYPE zcl_util_faker_abs=>ty_faker_name VALUE 'TYPE_MESSAGE' ##NO_TEXT.
 ENDCLASS.
 
 
