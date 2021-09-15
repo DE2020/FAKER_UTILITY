@@ -10,6 +10,7 @@ public section.
   data MUNIQUE type ABAP_BOOL .
   data MMAX_BUFFER type I .
 
+  methods CLEAR_VALUES .
   methods CONSTRUCTOR .
   methods GET_FAKER_NAME
     returning
@@ -57,6 +58,11 @@ ENDCLASS.
 
 
 CLASS ZCL_UTIL_FAKER_ABS IMPLEMENTATION.
+
+
+  METHOD clear_values.
+    buffer->clear( ).
+  ENDMETHOD.
 
 
   METHOD constructor.
