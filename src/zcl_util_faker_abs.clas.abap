@@ -8,7 +8,7 @@ public section.
   types TY_FAKER_NAME type STRING .
 
   data MUNIQUE type ABAP_BOOL .
-  data MMAX_BUFFER type I .
+  data MMAX_BUFFER type I value 100 ##NO_TEXT.
 
   methods CLEAR_VALUES .
   methods CONSTRUCTOR .
@@ -41,6 +41,12 @@ public section.
     returning
       value(R) type ref to ZCL_UTIL_FAKER_ABS .
   methods UNIQUE
+    returning
+      value(R) type ref to ZCL_UTIL_FAKER_ABS .
+  methods SET_PROPERTY
+    importing
+      !FIELD type STRING
+      !VALUE type ANY
     returning
       value(R) type ref to ZCL_UTIL_FAKER_ABS .
 protected section.
@@ -105,6 +111,15 @@ CLASS ZCL_UTIL_FAKER_ABS IMPLEMENTATION.
     LOOP AT list ASSIGNING FIELD-SYMBOL(<l>).
       push( <l> ).
     ENDLOOP.
+    r = me.
+  ENDMETHOD.
+
+
+  METHOD set_property.
+    ASSIGN (field) TO FIELD-SYMBOL(<any>).
+    IF sy-subrc = 0.
+      <any> = value.
+    ENDIF.
     r = me.
   ENDMETHOD.
 
