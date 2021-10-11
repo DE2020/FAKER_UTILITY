@@ -1,27 +1,32 @@
-class ZCL_UTIL_FAKER_CHAR definition
-  public
-  inheriting from ZCL_UTIL_FAKER_ABS
-  final
-  create public .
+CLASS zcl_util_faker_char DEFINITION
+  PUBLIC
+  INHERITING FROM zcl_util_faker_abs
+  FINAL
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  methods GET_FAKER_NAME
-    redefinition .
-protected section.
+    METHODS get_faker_name
+        REDEFINITION .
+    CONSTANTS c_pattern_01 TYPE string VALUE 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.
+    CONSTANTS c_pattern_02 TYPE string VALUE 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'.
 
-  methods FIND_DATA
-    redefinition .
-private section.
+    DATA pattern TYPE string VALUE c_pattern_01.
+    DATA long_char TYPE i VALUE 5 .
+  PROTECTED SECTION.
 
-  constants C_FAKER_NAME type ZCL_UTIL_FAKER_ABS=>TY_FAKER_NAME value 'EMAIL' ##NO_TEXT.
-  data PATTERN type STRING value 'ABCDEF' ##NO_TEXT.
-  data LONG_CHAR type I value 5 ##NO_TEXT.
+    METHODS find_data
+        REDEFINITION .
+
+  PRIVATE SECTION.
+
+    CONSTANTS c_faker_name TYPE zcl_util_faker_abs=>ty_faker_name VALUE 'CHAR'.
+
 ENDCLASS.
 
 
 
-CLASS ZCL_UTIL_FAKER_CHAR IMPLEMENTATION.
+CLASS zcl_util_faker_char IMPLEMENTATION.
 
 
   METHOD find_data.
@@ -32,11 +37,10 @@ CLASS ZCL_UTIL_FAKER_CHAR IMPLEMENTATION.
 
     DATA(lg) = strlen( pattern ).
 
-*    random_int( max = lg ).
     DO mmax_buffer TIMES.
       APPEND INITIAL LINE TO ti ASSIGNING FIELD-SYMBOL(<l>).
       DO long_char TIMES.
-        DATA(pos) = zcl_util_faker=>random_int( max = strlen( pattern ) ).
+        DATA(pos) = ( zcl_util_faker=>random_int( max = strlen( pattern ) ) ) - 1.
         <l> = <l> && pattern+pos(1).
       ENDDO.
     ENDDO.
@@ -51,7 +55,7 @@ CLASS ZCL_UTIL_FAKER_CHAR IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD GET_FAKER_NAME.
+  METHOD get_faker_name.
     r = c_faker_name.
   ENDMETHOD.
 ENDCLASS.

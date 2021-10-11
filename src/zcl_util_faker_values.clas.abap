@@ -14,7 +14,7 @@ protected section.
     redefinition .
   PRIVATE SECTION.
 
-    CONSTANTS c_faker_name TYPE zcl_util_faker_abs=>ty_faker_name VALUE 'EMAIL' ##NO_TEXT.
+    CONSTANTS c_faker_name TYPE zcl_util_faker_abs=>ty_faker_name VALUE 'VALUES' ##NO_TEXT.
 ENDCLASS.
 
 
@@ -32,6 +32,6 @@ CLASS ZCL_UTIL_FAKER_VALUES IMPLEMENTATION.
 
 
   METHOD get_faker_name.
-    r = 'VALUES'.
+    r = c_faker_name.
   ENDMETHOD.
 ENDCLASS.

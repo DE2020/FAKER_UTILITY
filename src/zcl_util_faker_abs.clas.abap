@@ -1,70 +1,67 @@
-class ZCL_UTIL_FAKER_ABS definition
-  public
-  abstract
-  create public .
+CLASS zcl_util_faker_abs DEFINITION
+  PUBLIC
+  ABSTRACT
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  types TY_FAKER_NAME type STRING .
+    TYPES ty_faker_name TYPE string .
 
-  data MUNIQUE type ABAP_BOOL .
-  data MMAX_BUFFER type I value 100 ##NO_TEXT.
+    DATA munique TYPE abap_bool .
+    DATA mmax_buffer TYPE i VALUE 100 ##NO_TEXT.
 
-  methods CLEAR_VALUES .
-  methods CONSTRUCTOR .
-  methods GET_FAKER_NAME
-    returning
-      value(R) type TY_FAKER_NAME .
-  methods GET_STRING
-    importing
-      !LEN type I default 100
-    returning
-      value(R) type STRING .
-  methods MAX_BUFFER
-    importing
-      !MAX type I
-    returning
-      value(R) type ref to ZCL_UTIL_FAKER_ABS .
-  methods POP
-    importing
-      !REMOVE type ABAP_BOOL default ABAP_TRUE
-    exporting
-      !VAL type ANY .
-  methods PUSH
-    importing
-      !VALUE type ANY
-    returning
-      value(R) type ref to ZCL_UTIL_FAKER_ABS .
-  methods SET_LIST
-    importing
-      !LIST type ANY TABLE
-    returning
-      value(R) type ref to ZCL_UTIL_FAKER_ABS .
-  methods UNIQUE
-    returning
-      value(R) type ref to ZCL_UTIL_FAKER_ABS .
-  methods SET_PROPERTY
-    importing
-      !FIELD type STRING
-      !VALUE type ANY
-    returning
-      value(R) type ref to ZCL_UTIL_FAKER_ABS .
-protected section.
+    METHODS clear_values .
+    METHODS constructor .
+    METHODS get_faker_name
+      RETURNING
+        VALUE(r) TYPE ty_faker_name .
+    METHODS get_string
+      IMPORTING
+        !len     TYPE i DEFAULT 100
+      RETURNING
+        VALUE(r) TYPE string .
+    METHODS max_buffer
+      IMPORTING
+        !max     TYPE i
+      RETURNING
+        VALUE(r) TYPE REF TO zcl_util_faker_abs .
+    METHODS pop
+      IMPORTING
+        !remove TYPE abap_bool DEFAULT abap_true
+      EXPORTING
+        !val    TYPE any .
+    METHODS push
+      IMPORTING
+        !value   TYPE any
+      RETURNING
+        VALUE(r) TYPE REF TO zcl_util_faker_abs .
+    METHODS set_list
+      IMPORTING
+        !list    TYPE ANY TABLE
+      RETURNING
+        VALUE(r) TYPE REF TO zcl_util_faker_abs .
+    METHODS unique
+      RETURNING
+        VALUE(r) TYPE REF TO zcl_util_faker_abs .
+    METHODS set_property
+      IMPORTING
+        !field   TYPE string
+        !value   TYPE any
+      RETURNING
+        VALUE(r) TYPE REF TO zcl_util_faker_abs .
+  PROTECTED SECTION.
 
-  methods FIND_DATA
-  abstract .
-  methods UNIQUE_FOR_CONTENT
-    returning
-      value(R) type ref to ZCL_UTIL_FAKER_ABS .
-private section.
+    METHODS find_data
+        ABSTRACT .
+    METHODS unique_for_content
+      RETURNING
+        VALUE(r) TYPE REF TO zcl_util_faker_abs .
+  PRIVATE SECTION.
 
-  data BUFFER type ref to LCL_BUFFER .
+    DATA buffer TYPE REF TO lcl_buffer .
 ENDCLASS.
 
-
-
-CLASS ZCL_UTIL_FAKER_ABS IMPLEMENTATION.
-
+CLASS zcl_util_faker_abs IMPLEMENTATION.
 
   METHOD clear_values.
     buffer->clear( ).
@@ -76,19 +73,19 @@ CLASS ZCL_UTIL_FAKER_ABS IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD GET_FAKER_NAME.
+  METHOD get_faker_name.
 ** redefinir
   ENDMETHOD.
 
 
-  METHOD GET_STRING.
+  METHOD get_string.
     pop(
       IMPORTING
         val    = r ).
   ENDMETHOD.
 
 
-  METHOD MAX_BUFFER.
+  METHOD max_buffer.
     mmax_buffer = max.
     r = me.
   ENDMETHOD.
@@ -116,7 +113,9 @@ CLASS ZCL_UTIL_FAKER_ABS IMPLEMENTATION.
 
 
   METHOD set_property.
-    ASSIGN (field) TO FIELD-SYMBOL(<any>).
+*    DATA lfield TYPE string VALUE 'ME->'.
+*    lfield = lfield && field.
+    ASSIGN me->(field) TO FIELD-SYMBOL(<any>).
     IF sy-subrc = 0.
       <any> = value.
     ENDIF.
@@ -124,7 +123,7 @@ CLASS ZCL_UTIL_FAKER_ABS IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD UNIQUE.
+  METHOD unique.
     munique = abap_true.
     r = me.
   ENDMETHOD.
