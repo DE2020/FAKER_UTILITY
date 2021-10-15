@@ -1,17 +1,18 @@
-class ZCL_UTIL_FAKER_VALUES definition
-  public
-  inheriting from ZCL_UTIL_FAKER_ABS
-  final
-  create public .
+CLASS zcl_util_faker_values DEFINITION
+  PUBLIC
+  INHERITING FROM zcl_util_faker_abs
+  FINAL
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  methods GET_FAKER_NAME
-    redefinition .
-protected section.
+    METHODS get_faker_name
+        REDEFINITION .
+    METHODS get_string REDEFINITION.
+  PROTECTED SECTION.
 
-  methods FIND_DATA
-    redefinition .
+    METHODS find_data
+        REDEFINITION .
   PRIVATE SECTION.
 
     CONSTANTS c_faker_name TYPE zcl_util_faker_abs=>ty_faker_name VALUE 'VALUES' ##NO_TEXT.
@@ -19,7 +20,7 @@ ENDCLASS.
 
 
 
-CLASS ZCL_UTIL_FAKER_VALUES IMPLEMENTATION.
+CLASS zcl_util_faker_values IMPLEMENTATION.
 
 
   METHOD find_data.
@@ -33,5 +34,13 @@ CLASS ZCL_UTIL_FAKER_VALUES IMPLEMENTATION.
 
   METHOD get_faker_name.
     r = c_faker_name.
+  ENDMETHOD.
+
+  METHOD get_string.
+    pop(
+    EXPORTING remove = abap_false
+      IMPORTING
+        val    = r
+         ).
   ENDMETHOD.
 ENDCLASS.

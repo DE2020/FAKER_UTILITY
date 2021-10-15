@@ -12,7 +12,7 @@ CLASS zcl_util_faker_abs DEFINITION
 
     METHODS clear_values .
     METHODS constructor .
-    METHODS get_faker_name
+    METHODS get_faker_name ABSTRACT
       RETURNING
         VALUE(r) TYPE ty_faker_name .
     METHODS get_string
@@ -61,7 +61,10 @@ CLASS zcl_util_faker_abs DEFINITION
     DATA buffer TYPE REF TO lcl_buffer .
 ENDCLASS.
 
-CLASS zcl_util_faker_abs IMPLEMENTATION.
+
+
+CLASS ZCL_UTIL_FAKER_ABS IMPLEMENTATION.
+
 
   METHOD clear_values.
     buffer->clear( ).
@@ -70,11 +73,6 @@ CLASS zcl_util_faker_abs IMPLEMENTATION.
 
   METHOD constructor.
     CREATE OBJECT buffer.
-  ENDMETHOD.
-
-
-  METHOD get_faker_name.
-** redefinir
   ENDMETHOD.
 
 
@@ -113,8 +111,6 @@ CLASS zcl_util_faker_abs IMPLEMENTATION.
 
 
   METHOD set_property.
-*    DATA lfield TYPE string VALUE 'ME->'.
-*    lfield = lfield && field.
     ASSIGN me->(field) TO FIELD-SYMBOL(<any>).
     IF sy-subrc = 0.
       <any> = value.
