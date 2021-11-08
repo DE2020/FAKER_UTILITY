@@ -22,6 +22,14 @@ CLASS zcl_util_faker DEFINITION
         !max     TYPE i DEFAULT 100
       RETURNING
         VALUE(r) TYPE i .
+
+    CLASS-METHODS random_bool
+      IMPORTING
+        !min     TYPE i DEFAULT 1
+        !max     TYPE i DEFAULT 100
+      RETURNING
+        VALUE(r) TYPE abap_bool .
+
     CLASS-METHODS factory
       EXPORTING
         VALUE(ofaker) TYPE REF TO zcl_util_faker .
@@ -38,14 +46,14 @@ CLASS zcl_util_faker DEFINITION
   PROTECTED SECTION.
 
     DATA munique TYPE abap_bool .
-private section.
+  PRIVATE SECTION.
 
-  class-data BUFFER_RND type ref to ZCL_ABAP_TOOL_BUFFER_01 .
+    CLASS-DATA buffer_rnd TYPE REF TO zcl_abap_tool_buffer_01 .
 ENDCLASS.
 
 
 
-CLASS ZCL_UTIL_FAKER IMPLEMENTATION.
+CLASS zcl_util_faker IMPLEMENTATION.
 
 
   METHOD constructor.
@@ -97,7 +105,7 @@ CLASS ZCL_UTIL_FAKER IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD LIST_DOMVALUE.
+  METHOD list_domvalue.
     DATA dd07v_tab TYPE dd07v_tab.
     CALL FUNCTION 'DD_DOMVALUES_GET'
       EXPORTING
@@ -127,4 +135,14 @@ CLASS ZCL_UTIL_FAKER IMPLEMENTATION.
 
     r = rnd->get_next( ).
   ENDMETHOD.
+  METHOD random_bool.
+    DATA rnd TYPE REF TO cl_abap_random_int.
+    CASE CONV i( cl_abap_random_int=>create( min = 0 max = 1 )->get_next( ) ).
+      WHEN 0.
+        r = abap_true.
+      WHEN OTHERS.
+        r = abap_false.
+    ENDCASE.
+  ENDMETHOD.
+
 ENDCLASS.

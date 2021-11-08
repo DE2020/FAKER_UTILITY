@@ -56,9 +56,10 @@ CLASS zcl_util_faker_abs DEFINITION
     METHODS unique_for_content
       RETURNING
         VALUE(r) TYPE REF TO zcl_util_faker_abs .
+
   PRIVATE SECTION.
 
-    DATA buffer TYPE REF TO lcl_buffer .
+   DATA buffer TYPE REF TO lcl_buffer .
 ENDCLASS.
 
 
