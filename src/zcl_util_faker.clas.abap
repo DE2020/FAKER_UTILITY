@@ -123,13 +123,17 @@ CLASS zcl_util_faker IMPLEMENTATION.
 
   METHOD random_int.
     DATA rnd TYPE REF TO cl_abap_random_int.
+    DATA seed TYPE i.
     IF buffer_rnd IS INITIAL.
       CREATE OBJECT buffer_rnd.
     ENDIF.
 
     buffer_rnd->get( EXPORTING ikey = min && '/' && max IMPORTING idata = rnd EXCEPTIONS OTHERS = 100 ).
     IF sy-subrc <> 0.
-      rnd = cl_abap_random_int=>create( min = min max = max ).
+
+      seed = sy-uzeit+4(2) + min + max.
+
+      rnd = cl_abap_random_int=>create( min = min max = max seed = seed ).
       buffer_rnd->add( EXPORTING ikey = min && '/' && max idata = rnd EXCEPTIONS OTHERS = 0 ).
     ENDIF.
 
